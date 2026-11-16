@@ -1,0 +1,90 @@
+{
+  "apiVersion": 1,
+  "hostApi": 2,
+  "id": "shanlian",
+  "name": "闪连",
+  "version": "1.1.0",
+  "description": "独立闪连控制台：节点、连接、账号、代理接口与 Clash 订阅，通过配置的服务接口接入。",
+  "permissions": [
+    "storage.read",
+    "application.local"
+  ],
+  "page": {
+    "title": "闪连",
+    "kind": "application"
+  },
+  "application": {
+    "frontend": "ui.js",
+    "styles": "ui.css",
+    "backend": "server.mjs"
+  },
+  "records": {
+    "storage": "private",
+    "resourceType": "entry",
+    "fields": [
+      {
+        "key": "title",
+        "label": "标题",
+        "type": "text",
+        "required": true
+      }
+    ]
+  },
+  "commands": [],
+  "configuration": {
+    "fields": [
+      {
+        "key": "endpoint",
+        "label": "Shanlian 服务地址",
+        "type": "text",
+        "required": true,
+        "description": "填写实际服务的 HTTP(S) 地址，例如本机转发地址；不默认使用 18081，避免连接到其他服务。"
+      },
+      {
+        "key": "username",
+        "label": "控制台管理账号",
+        "type": "text",
+        "required": true,
+        "default": "admin"
+      },
+      {
+        "key": "password",
+        "label": "控制台管理密码",
+        "type": "password",
+        "required": true,
+        "resetOnChange": [
+          "endpoint",
+          "username"
+        ]
+      }
+    ]
+  },
+  "category": "tool",
+  "tags": [
+    "闪连"
+  ],
+  "author": "Delivery 插件维护者",
+  "compatibility": {
+    "protocol": 1,
+    "sdk": "2.1.0"
+  },
+  "theme": "full",
+  "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+  "dependencies": [
+    "Shanlian 服务与自己的管理凭据"
+  ],
+  "capabilities": [
+    {
+      "id": "storage.read",
+      "required": true,
+      "purpose": "使用此插件声明的数据和记录操作",
+      "scope": "宿主受控接口，限当前插件已声明的资源"
+    },
+    {
+      "id": "application.local",
+      "required": true,
+      "purpose": "运行插件自身页面和后端",
+      "scope": "当前用户的本机文件和网络；非操作系统沙箱"
+    }
+  ]
+}
