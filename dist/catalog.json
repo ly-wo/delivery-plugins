@@ -1,0 +1,1141 @@
+{
+  "protocol": 1,
+  "releases": [
+    {
+      "id": "alert-hub",
+      "version": "1.1.0",
+      "manifest": {
+        "apiVersion": 1,
+        "id": "alert-hub",
+        "name": "告警中心",
+        "version": "1.1.0",
+        "hostApi": 2,
+        "description": "通过本机 MCP 管理告警、Case、待办、负责人和规则；独立插件界面，账号密码配置化，远端写入须确认。",
+        "category": "application",
+        "tags": [
+          "告警中心"
+        ],
+        "author": "Delivery 插件维护者",
+        "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+        "compatibility": {
+          "protocol": 1,
+          "sdk": "2.1.0"
+        },
+        "theme": "full",
+        "dependencies": [
+          "Alert Hub 服务、自己的账号及本机 alert-hub-mcp"
+        ],
+        "capabilities": [
+          {
+            "id": "storage.read",
+            "required": true,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "application.local",
+            "required": true,
+            "purpose": "运行插件自身页面和后端",
+            "scope": "当前用户的本机文件和网络；非操作系统沙箱"
+          },
+          {
+            "id": "conversation.compose",
+            "required": false,
+            "purpose": "将选择的内容填入会话草稿",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          }
+        ],
+        "permissions": [
+          "storage.read",
+          "application.local",
+          "conversation.compose"
+        ],
+        "page": {
+          "title": "告警中心",
+          "kind": "application"
+        },
+        "application": {
+          "frontend": "ui.js",
+          "styles": "ui.css",
+          "backend": "server.mjs"
+        },
+        "configuration": {
+          "fields": [
+            {
+              "key": "endpoint",
+              "label": "Alert Hub 服务地址",
+              "type": "text",
+              "description": "账号密码将用于此 HTTPS 服务的真实登录，请核对地址。",
+              "required": true,
+              "default": "https://thor-alert-hub.hahavending.com"
+            },
+            {
+              "key": "command",
+              "label": "MCP 可执行文件",
+              "type": "text",
+              "description": "填写本机 alert-hub-mcp 的绝对路径，例如 /Users/你的用户名/.local/bin/alert-hub-mcp。",
+              "required": true
+            },
+            {
+              "key": "username",
+              "label": "账号",
+              "type": "text",
+              "required": true
+            },
+            {
+              "key": "password",
+              "label": "密码",
+              "type": "password",
+              "description": "留空保留原密码；更换服务地址或账号时必须重新填写。",
+              "required": true,
+              "resetOnChange": [
+                "endpoint",
+                "username"
+              ]
+            }
+          ]
+        },
+        "records": {
+          "storage": "private",
+          "resourceType": "alert",
+          "fields": [
+            {
+              "key": "title",
+              "label": "标题",
+              "type": "text",
+              "required": true,
+              "maxLength": 2000,
+              "default": ""
+            }
+          ]
+        },
+        "commands": []
+      },
+      "package": "alert-hub-1.1.0.dwp",
+      "sha256": "4fd223cc382435bf1e06a6982d080912d47655d83c3c77cdfd1504835b617b39"
+    },
+    {
+      "id": "bug-retrospective",
+      "version": "1.1.0",
+      "manifest": {
+        "apiVersion": 1,
+        "id": "bug-retrospective",
+        "name": "缺陷复盘台账",
+        "version": "1.1.0",
+        "hostApi": 1,
+        "description": "线上/联调典型缺陷根因、修复 MR 链接、回归测试守卫勾选与根因标签沉淀，可在修复同类问题时直接注入会话上下文。",
+        "category": "application",
+        "tags": [
+          "缺陷复盘台账"
+        ],
+        "author": "Delivery 插件维护者",
+        "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+        "compatibility": {
+          "protocol": 1,
+          "sdk": "2.1.0"
+        },
+        "theme": "full",
+        "dependencies": [],
+        "capabilities": [
+          {
+            "id": "storage.read",
+            "required": true,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "storage.write",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "jira.read",
+            "required": false,
+            "purpose": "查找并关联 Jira 任务",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "conversation.context",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          }
+        ],
+        "permissions": [
+          "storage.read",
+          "storage.write",
+          "jira.read",
+          "conversation.context"
+        ],
+        "page": {
+          "title": "缺陷复盘台账",
+          "kind": "records"
+        },
+        "records": {
+          "storage": "private",
+          "resourceType": "retrospective",
+          "fields": [
+            {
+              "key": "title",
+              "label": "缺陷现象摘要",
+              "type": "text",
+              "required": true,
+              "maxLength": 200,
+              "default": ""
+            },
+            {
+              "key": "severity",
+              "label": "严重等级",
+              "type": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "p0",
+                  "label": "P0 阻断"
+                },
+                {
+                  "value": "p1",
+                  "label": "P1 严重"
+                },
+                {
+                  "value": "p2",
+                  "label": "P2 一般"
+                }
+              ],
+              "maxLength": 2000,
+              "default": "p2"
+            },
+            {
+              "key": "status",
+              "label": "沉淀状态",
+              "type": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "analyzing",
+                  "label": "定位根因中"
+                },
+                {
+                  "value": "guarded",
+                  "label": "已补防复发测试"
+                },
+                {
+                  "value": "archived",
+                  "label": "已归档复用"
+                }
+              ],
+              "maxLength": 2000,
+              "default": "analyzing"
+            },
+            {
+              "key": "regressionAdded",
+              "label": "已补自动化回归用例",
+              "type": "checkbox",
+              "required": false,
+              "maxLength": 2000,
+              "default": "false"
+            },
+            {
+              "key": "prUrl",
+              "label": "修复提交 / MR 链接",
+              "type": "url",
+              "required": false,
+              "maxLength": 500,
+              "default": ""
+            },
+            {
+              "key": "tags",
+              "label": "根因分类标签",
+              "type": "tags",
+              "required": false,
+              "maxLength": 400,
+              "default": ""
+            },
+            {
+              "key": "details",
+              "label": "根因分析与防复发措施",
+              "type": "textarea",
+              "required": false,
+              "maxLength": 8000,
+              "default": ""
+            }
+          ]
+        },
+        "commands": [
+          {
+            "id": "cite",
+            "label": "作为经验注入会话",
+            "action": "conversation.context"
+          },
+          {
+            "id": "link-jira",
+            "label": "关联原缺陷 Jira",
+            "action": "jira.link"
+          }
+        ]
+      },
+      "package": "bug-retrospective-1.1.0.dwp",
+      "sha256": "dfd1475570fe3a2e284dcde57a71b4f3a654f770c649ffbf6c2edee2747fa0b5"
+    },
+    {
+      "id": "example-notes",
+      "version": "1.1.0",
+      "manifest": {
+        "apiVersion": 1,
+        "id": "example-notes",
+        "name": "项目备忘",
+        "version": "1.1.0",
+        "hostApi": 1,
+        "description": "最小自定义插件示例，使用独立存储并向会话贡献备忘资源。",
+        "category": "application",
+        "tags": [
+          "项目备忘"
+        ],
+        "author": "Delivery 插件维护者",
+        "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+        "compatibility": {
+          "protocol": 1,
+          "sdk": "2.1.0"
+        },
+        "theme": "full",
+        "dependencies": [],
+        "capabilities": [
+          {
+            "id": "storage.read",
+            "required": true,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "storage.write",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "conversation.context",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          }
+        ],
+        "permissions": [
+          "storage.read",
+          "storage.write",
+          "conversation.context"
+        ],
+        "page": {
+          "title": "项目备忘",
+          "kind": "records"
+        },
+        "records": {
+          "storage": "private",
+          "resourceType": "note",
+          "fields": [
+            {
+              "key": "title",
+              "label": "标题",
+              "type": "text",
+              "required": true,
+              "maxLength": 200,
+              "default": ""
+            },
+            {
+              "key": "details",
+              "label": "正文",
+              "type": "textarea",
+              "required": false,
+              "maxLength": 8000,
+              "default": ""
+            }
+          ]
+        },
+        "commands": [
+          {
+            "id": "cite",
+            "label": "引用到会话",
+            "action": "conversation.context"
+          }
+        ]
+      },
+      "package": "example-notes-1.1.0.dwp",
+      "sha256": "d4b7fdf3c3ab8bb6fe6c10308b839a96aa981447579bd2f8af19499ce9f13685"
+    },
+    {
+      "id": "go-learning",
+      "version": "1.1.0",
+      "manifest": {
+        "apiVersion": 1,
+        "id": "go-learning",
+        "name": "Go 实训工坊",
+        "version": "1.1.0",
+        "hostApi": 2,
+        "description": "独立的七天 Go 实训：课程、代码编辑、快照、真实运行测试与 HTTP 调试。",
+        "category": "application",
+        "tags": [
+          "Go 实训工坊"
+        ],
+        "author": "Delivery 插件维护者",
+        "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+        "compatibility": {
+          "protocol": 1,
+          "sdk": "2.1.0"
+        },
+        "theme": "full",
+        "dependencies": [
+          "本机 Go 工具链（运行与测试）"
+        ],
+        "capabilities": [
+          {
+            "id": "storage.read",
+            "required": true,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "application.local",
+            "required": true,
+            "purpose": "运行插件自身页面和后端",
+            "scope": "当前用户的本机文件和网络；非操作系统沙箱"
+          },
+          {
+            "id": "conversation.compose",
+            "required": false,
+            "purpose": "将选择的内容填入会话草稿",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "workspace.open",
+            "required": false,
+            "purpose": "打开本插件工作目录",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          }
+        ],
+        "permissions": [
+          "storage.read",
+          "application.local",
+          "conversation.compose",
+          "workspace.open"
+        ],
+        "page": {
+          "title": "Go 实训工坊",
+          "kind": "application"
+        },
+        "application": {
+          "frontend": "ui.js",
+          "styles": "ui.css",
+          "backend": "server.mjs"
+        },
+        "records": {
+          "storage": "private",
+          "resourceType": "note",
+          "fields": [
+            {
+              "key": "title",
+              "label": "标题",
+              "type": "text",
+              "required": true,
+              "maxLength": 2000,
+              "default": ""
+            }
+          ]
+        },
+        "commands": []
+      },
+      "package": "go-learning-1.1.0.dwp",
+      "sha256": "a27c7ac56076277af1945c984e15c4aa2b5b6fc408c1e813eb936efcebddea38"
+    },
+    {
+      "id": "release-checklist",
+      "version": "1.1.0",
+      "manifest": {
+        "apiVersion": 1,
+        "id": "release-checklist",
+        "name": "发版检查清单",
+        "version": "1.1.0",
+        "hostApi": 1,
+        "description": "发布前配置变更、SQL/环境变量核对、回滚演练勾选与流水线链接清单，支持一键引用到 Agent 做上线前风险复核。",
+        "category": "application",
+        "tags": [
+          "发版检查清单"
+        ],
+        "author": "Delivery 插件维护者",
+        "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+        "compatibility": {
+          "protocol": 1,
+          "sdk": "2.1.0"
+        },
+        "theme": "full",
+        "dependencies": [],
+        "capabilities": [
+          {
+            "id": "storage.read",
+            "required": true,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "storage.write",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "jira.read",
+            "required": false,
+            "purpose": "查找并关联 Jira 任务",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "conversation.context",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          }
+        ],
+        "permissions": [
+          "storage.read",
+          "storage.write",
+          "jira.read",
+          "conversation.context"
+        ],
+        "page": {
+          "title": "发版检查清单",
+          "kind": "records"
+        },
+        "records": {
+          "storage": "private",
+          "resourceType": "release",
+          "fields": [
+            {
+              "key": "title",
+              "label": "发版批次 / 服务名称",
+              "type": "text",
+              "required": true,
+              "maxLength": 200,
+              "default": ""
+            },
+            {
+              "key": "releaseDate",
+              "label": "计划发版日期",
+              "type": "date",
+              "required": false,
+              "maxLength": 2000,
+              "default": ""
+            },
+            {
+              "key": "env",
+              "label": "目标环境",
+              "type": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "staging",
+                  "label": "预发 / UAT"
+                },
+                {
+                  "value": "gray",
+                  "label": "灰度环境"
+                },
+                {
+                  "value": "prod",
+                  "label": "生产环境"
+                }
+              ],
+              "maxLength": 2000,
+              "default": "prod"
+            },
+            {
+              "key": "status",
+              "label": "核对状态",
+              "type": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "pending",
+                  "label": "待核对"
+                },
+                {
+                  "value": "ready",
+                  "label": "可发版"
+                },
+                {
+                  "value": "done",
+                  "label": "已发布验证"
+                }
+              ],
+              "maxLength": 2000,
+              "default": "pending"
+            },
+            {
+              "key": "rollbackVerified",
+              "label": "回滚预案已核验",
+              "type": "checkbox",
+              "required": false,
+              "maxLength": 2000,
+              "default": "false"
+            },
+            {
+              "key": "pipelineUrl",
+              "label": "流水线 / MR 链接",
+              "type": "url",
+              "required": false,
+              "maxLength": 500,
+              "default": ""
+            },
+            {
+              "key": "tags",
+              "label": "变更风险标签",
+              "type": "tags",
+              "required": false,
+              "maxLength": 400,
+              "default": ""
+            },
+            {
+              "key": "details",
+              "label": "配置变更与回滚预案",
+              "type": "textarea",
+              "required": false,
+              "maxLength": 8000,
+              "default": ""
+            }
+          ]
+        },
+        "commands": [
+          {
+            "id": "cite",
+            "label": "交给 Agent 复核风险",
+            "action": "conversation.context"
+          },
+          {
+            "id": "link-jira",
+            "label": "关联发版 Jira",
+            "action": "jira.link"
+          }
+        ]
+      },
+      "package": "release-checklist-1.1.0.dwp",
+      "sha256": "4d5f24d7d57ae95a7001e41cb1f0c4953c0e9e44574f2890a32e5117b60da111"
+    },
+    {
+      "id": "requirement-ledger",
+      "version": "1.1.0",
+      "manifest": {
+        "apiVersion": 1,
+        "id": "requirement-ledger",
+        "name": "轻量需求台账",
+        "version": "1.1.0",
+        "hostApi": 1,
+        "description": "面向日常迭代的需求拆解与验收标准台账，支持工时估算、PRD 链接、业务标签及关联/创建 Jira 单据。",
+        "category": "application",
+        "tags": [
+          "轻量需求台账"
+        ],
+        "author": "Delivery 插件维护者",
+        "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+        "compatibility": {
+          "protocol": 1,
+          "sdk": "2.1.0"
+        },
+        "theme": "full",
+        "dependencies": [],
+        "capabilities": [
+          {
+            "id": "storage.read",
+            "required": true,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "storage.write",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "jira.read",
+            "required": false,
+            "purpose": "查找并关联 Jira 任务",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "jira.create",
+            "required": false,
+            "purpose": "预览确认后创建 Jira 任务",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "conversation.context",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          }
+        ],
+        "permissions": [
+          "storage.read",
+          "storage.write",
+          "jira.read",
+          "jira.create",
+          "conversation.context"
+        ],
+        "page": {
+          "title": "轻量需求台账",
+          "kind": "records"
+        },
+        "records": {
+          "storage": "private",
+          "resourceType": "requirement",
+          "fields": [
+            {
+              "key": "title",
+              "label": "需求标题",
+              "type": "text",
+              "required": true,
+              "maxLength": 200,
+              "default": ""
+            },
+            {
+              "key": "module",
+              "label": "所属模块 / 仓库",
+              "type": "text",
+              "required": false,
+              "maxLength": 160,
+              "default": ""
+            },
+            {
+              "key": "prdUrl",
+              "label": "PRD / 原型链接",
+              "type": "url",
+              "required": false,
+              "maxLength": 500,
+              "default": ""
+            },
+            {
+              "key": "estimateDays",
+              "label": "预估工时（人日）",
+              "type": "number",
+              "required": false,
+              "maxLength": 20,
+              "default": ""
+            },
+            {
+              "key": "targetDate",
+              "label": "计划提测日期",
+              "type": "date",
+              "required": false,
+              "maxLength": 2000,
+              "default": ""
+            },
+            {
+              "key": "status",
+              "label": "推进状态",
+              "type": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "clarifying",
+                  "label": "待澄清"
+                },
+                {
+                  "value": "developing",
+                  "label": "开发中"
+                },
+                {
+                  "value": "testing",
+                  "label": "联调提测"
+                },
+                {
+                  "value": "released",
+                  "label": "已上线"
+                }
+              ],
+              "maxLength": 2000,
+              "default": "clarifying"
+            },
+            {
+              "key": "tags",
+              "label": "业务标签",
+              "type": "tags",
+              "required": false,
+              "maxLength": 400,
+              "default": ""
+            },
+            {
+              "key": "details",
+              "label": "需求范围与验收标准",
+              "type": "textarea",
+              "required": false,
+              "maxLength": 8000,
+              "default": ""
+            }
+          ]
+        },
+        "commands": [
+          {
+            "id": "cite",
+            "label": "带入 Agent 会话",
+            "action": "conversation.context"
+          },
+          {
+            "id": "link-jira",
+            "label": "关联已有 Jira",
+            "action": "jira.link"
+          },
+          {
+            "id": "create-jira",
+            "label": "生成 Jira 任务",
+            "action": "jira.create"
+          }
+        ]
+      },
+      "package": "requirement-ledger-1.1.0.dwp",
+      "sha256": "c517d4ed1d9972d1e03902426b86f7ec1783970c7a61eb8e41922577cdf6ed2f"
+    },
+    {
+      "id": "shanlian",
+      "version": "1.1.0",
+      "manifest": {
+        "apiVersion": 1,
+        "id": "shanlian",
+        "name": "闪连",
+        "version": "1.1.0",
+        "hostApi": 2,
+        "description": "独立闪连控制台：节点、连接、账号、代理接口与 Clash 订阅，通过配置的服务接口接入。",
+        "category": "tool",
+        "tags": [
+          "闪连"
+        ],
+        "author": "Delivery 插件维护者",
+        "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+        "compatibility": {
+          "protocol": 1,
+          "sdk": "2.1.0"
+        },
+        "theme": "full",
+        "dependencies": [
+          "Shanlian 服务与自己的管理凭据"
+        ],
+        "capabilities": [
+          {
+            "id": "storage.read",
+            "required": true,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "application.local",
+            "required": true,
+            "purpose": "运行插件自身页面和后端",
+            "scope": "当前用户的本机文件和网络；非操作系统沙箱"
+          }
+        ],
+        "permissions": [
+          "storage.read",
+          "application.local"
+        ],
+        "page": {
+          "title": "闪连",
+          "kind": "application"
+        },
+        "application": {
+          "frontend": "ui.js",
+          "styles": "ui.css",
+          "backend": "server.mjs"
+        },
+        "configuration": {
+          "fields": [
+            {
+              "key": "endpoint",
+              "label": "Shanlian 服务地址",
+              "type": "text",
+              "description": "填写实际服务的 HTTP(S) 地址，例如本机转发地址；不默认使用 18081，避免连接到其他服务。",
+              "required": true
+            },
+            {
+              "key": "username",
+              "label": "控制台管理账号",
+              "type": "text",
+              "required": true,
+              "default": "admin"
+            },
+            {
+              "key": "password",
+              "label": "控制台管理密码",
+              "type": "password",
+              "required": true,
+              "resetOnChange": [
+                "endpoint",
+                "username"
+              ]
+            }
+          ]
+        },
+        "records": {
+          "storage": "private",
+          "resourceType": "entry",
+          "fields": [
+            {
+              "key": "title",
+              "label": "标题",
+              "type": "text",
+              "required": true,
+              "maxLength": 2000,
+              "default": ""
+            }
+          ]
+        },
+        "commands": []
+      },
+      "package": "shanlian-1.1.0.dwp",
+      "sha256": "817668ae3d4d1c25ca4de088295228cbed5399528b039b8341acb86547936002"
+    },
+    {
+      "id": "sign-hub",
+      "version": "1.1.0",
+      "manifest": {
+        "apiVersion": 1,
+        "id": "sign-hub",
+        "name": "Sign Hub",
+        "version": "1.1.0",
+        "hostApi": 2,
+        "description": "独立签到管理：站点、账号、登录校验、签到、执行记录、备份与服务设置。",
+        "category": "application",
+        "tags": [
+          "Sign Hub"
+        ],
+        "author": "Delivery 插件维护者",
+        "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+        "compatibility": {
+          "protocol": 1,
+          "sdk": "2.1.0"
+        },
+        "theme": "full",
+        "dependencies": [
+          "Sign Hub 服务与管理员令牌"
+        ],
+        "capabilities": [
+          {
+            "id": "storage.read",
+            "required": true,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "application.local",
+            "required": true,
+            "purpose": "运行插件自身页面和后端",
+            "scope": "当前用户的本机文件和网络；非操作系统沙箱"
+          }
+        ],
+        "permissions": [
+          "storage.read",
+          "application.local"
+        ],
+        "page": {
+          "title": "Sign Hub",
+          "kind": "application"
+        },
+        "application": {
+          "frontend": "ui.js",
+          "styles": "ui.css",
+          "backend": "server.mjs"
+        },
+        "configuration": {
+          "fields": [
+            {
+              "key": "endpoint",
+              "label": "Sign Hub 服务地址",
+              "type": "text",
+              "required": true,
+              "default": "http://127.0.0.1:8990"
+            },
+            {
+              "key": "token",
+              "label": "管理员令牌",
+              "type": "password",
+              "description": "使用你自己的 Sign Hub 管理员令牌；不自动读取其他工作台的认证文件。",
+              "required": true,
+              "resetOnChange": [
+                "endpoint"
+              ]
+            }
+          ]
+        },
+        "records": {
+          "storage": "private",
+          "resourceType": "entry",
+          "fields": [
+            {
+              "key": "title",
+              "label": "标题",
+              "type": "text",
+              "required": true,
+              "maxLength": 2000,
+              "default": ""
+            }
+          ]
+        },
+        "commands": []
+      },
+      "package": "sign-hub-1.1.0.dwp",
+      "sha256": "02081cb81e15408c838638e259f9cc3023751d3d0c90259c31ff8cd307acd16f"
+    },
+    {
+      "id": "personal-todos",
+      "version": "1.1.0",
+      "manifest": {
+        "apiVersion": 1,
+        "id": "personal-todos",
+        "name": "待办事项",
+        "version": "1.1.0",
+        "hostApi": 1,
+        "description": "复用工作台个人待办，可关联或创建 Jira 任务，并引用到会话。",
+        "category": "application",
+        "tags": [
+          "待办事项"
+        ],
+        "author": "Delivery 插件维护者",
+        "releaseNotes": "独立发布包；新增分类、公开主题通知和能力用途说明。",
+        "compatibility": {
+          "protocol": 1,
+          "sdk": "2.1.0"
+        },
+        "theme": "full",
+        "dependencies": [],
+        "capabilities": [
+          {
+            "id": "workspace.todos.read",
+            "required": true,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "当前工作台个人待办"
+          },
+          {
+            "id": "workspace.todos.write",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "当前工作台个人待办"
+          },
+          {
+            "id": "jira.read",
+            "required": false,
+            "purpose": "查找并关联 Jira 任务",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "jira.create",
+            "required": false,
+            "purpose": "预览确认后创建 Jira 任务",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          },
+          {
+            "id": "conversation.context",
+            "required": false,
+            "purpose": "使用此插件声明的数据和记录操作",
+            "scope": "宿主受控接口，限当前插件已声明的资源"
+          }
+        ],
+        "permissions": [
+          "workspace.todos.read",
+          "workspace.todos.write",
+          "jira.read",
+          "jira.create",
+          "conversation.context"
+        ],
+        "page": {
+          "title": "待办事项",
+          "kind": "records"
+        },
+        "records": {
+          "storage": "workspace.todos",
+          "resourceType": "todo",
+          "fields": [
+            {
+              "key": "title",
+              "label": "标题",
+              "type": "text",
+              "required": true,
+              "maxLength": 200,
+              "default": ""
+            },
+            {
+              "key": "details",
+              "label": "说明",
+              "type": "textarea",
+              "required": false,
+              "maxLength": 2000,
+              "default": ""
+            },
+            {
+              "key": "dueDate",
+              "label": "截止日期",
+              "type": "date",
+              "required": false,
+              "maxLength": 2000,
+              "default": ""
+            },
+            {
+              "key": "priority",
+              "label": "优先级",
+              "type": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "normal",
+                  "label": "普通"
+                },
+                {
+                  "value": "high",
+                  "label": "高"
+                }
+              ],
+              "maxLength": 2000,
+              "default": "normal"
+            },
+            {
+              "key": "status",
+              "label": "状态",
+              "type": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "todo",
+                  "label": "待办"
+                },
+                {
+                  "value": "doing",
+                  "label": "进行中"
+                },
+                {
+                  "value": "done",
+                  "label": "已完成"
+                }
+              ],
+              "maxLength": 2000,
+              "default": "todo"
+            }
+          ]
+        },
+        "commands": [
+          {
+            "id": "create-jira",
+            "label": "创建 Jira 任务",
+            "action": "jira.create"
+          },
+          {
+            "id": "link-jira",
+            "label": "关联已有 Jira",
+            "action": "jira.link"
+          },
+          {
+            "id": "cite",
+            "label": "引用到会话",
+            "action": "conversation.context"
+          }
+        ]
+      },
+      "package": "personal-todos-1.1.0.dwp",
+      "sha256": "f20f6f28e2df0d2091dd4095e965b313022b037b8da0673f8ed6fb05c4d74fda"
+    }
+  ]
+}
