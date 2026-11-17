@@ -110,8 +110,8 @@ importers:
   .:
     dependencies:
       '@delivery/plugin-sdk':
-        specifier: file:vendor/delivery-plugin-sdk-2.1.0.tgz
-        version: file:vendor/delivery-plugin-sdk-2.1.0.tgz
+        specifier: file:vendor/delivery-plugin-sdk-2.2.0.tgz
+        version: file:vendor/delivery-plugin-sdk-2.2.0.tgz
       '@lucide/vue':
         specifier: 1.41.0
         version: 1.41.0(vue@3.5.42(typescript@5.9.3))
@@ -167,9 +167,9 @@ packages:
     resolution: {integrity: sha512-miLzcPaPApfChfqxxDw7nsTA8hlU4M9GZnL3UVdaxgyRzewiYaI0lsmn72SOARHgVDlVSagTTh2zWt4OcxYmmg==}
     engines: {node: '>=14'}
 
-  '@delivery/plugin-sdk@file:vendor/delivery-plugin-sdk-2.1.0.tgz':
-    resolution: {integrity: sha512-xYVLoUWlbv8UutW2F+RKitrZZQvHzaBoUY9AU/+n076txC0q6A1CAATiHmJ0/3Ve9NV7jeJ0UapvFZHHHDDosA==, tarball: file:vendor/delivery-plugin-sdk-2.1.0.tgz}
-    version: 2.1.0
+  '@delivery/plugin-sdk@file:vendor/delivery-plugin-sdk-2.2.0.tgz':
+    resolution: {integrity: sha512-2GXWRuC95aaMt4F6HKKzl4sF5xrh9uJZeXguGa0lm6pvlHGCFVnhZkurSI4LKQV9KW/Ur2YeLtIvy5AaTDsQnw==, tarball: file:vendor/delivery-plugin-sdk-2.2.0.tgz}
+    version: 2.2.0
 
   '@element-plus/icons-vue@2.3.2':
     resolution: {integrity: sha512-OzIuTaIfC8QXEPmJvB4Y4kw34rSXdCJzxcD1kFStBvr8bK6X1zQAYDo0CNMjojnfTqRQCJ0I7prlErcoRiET2A==}
@@ -831,7 +831,7 @@ snapshots:
 
   '@ctrl/tinycolor@4.3.1': {}
 
-  '@delivery/plugin-sdk@file:vendor/delivery-plugin-sdk-2.1.0.tgz':
+  '@delivery/plugin-sdk@file:vendor/delivery-plugin-sdk-2.2.0.tgz':
     dependencies:
       zod: 4.5.4
 

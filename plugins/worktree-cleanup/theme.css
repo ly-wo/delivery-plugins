@@ -1,0 +1,97 @@
+:root {
+  font-family: var(--sans, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ui-text, #243247);
+  background: transparent;
+  --cleanup-accent: var(--ui-accent, #2563eb);
+  --cleanup-muted: var(--ui-muted, #718096);
+  --cleanup-border: var(--ui-border, #dce4ef);
+  --cleanup-surface: var(--ui-surface, #fff);
+  --cleanup-raised: var(--ui-raised, #f5f7fa);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: transparent; }
+button, input, select { font: inherit; color: inherit; }
+button, input:not([type="checkbox"]), select {
+  min-height: 32px;
+  border: 1px solid var(--cleanup-border);
+  border-radius: 6px;
+  background: var(--cleanup-surface);
+  padding: 5px 10px;
+}
+button { cursor: pointer; white-space: nowrap; transition: background .15s, border-color .15s; }
+button:hover:not(:disabled) { border-color: var(--cleanup-accent); color: var(--cleanup-accent); background: color-mix(in srgb, var(--cleanup-accent) 7%, var(--cleanup-surface)); }
+button.primary, button.active { color: var(--cleanup-accent); border-color: color-mix(in srgb, var(--cleanup-accent) 40%, var(--cleanup-border)); background: color-mix(in srgb, var(--cleanup-accent) 12%, var(--cleanup-surface)); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--cleanup-accent); outline-offset: 2px; }
+input::placeholder { color: var(--cleanup-muted); }
+input[type="checkbox"] { width: 14px; height: 14px; margin: 0; accent-color: var(--cleanup-accent); flex: 0 0 auto; }
+.cleanup { padding: 0 4px 20px; }
+.toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cleanup > .toolbar { padding: 0 0 12px; border-bottom: 1px solid var(--cleanup-border); }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tabs button { min-height: 28px; padding: 3px 11px; border-radius: 999px; font-size: 12px; }
+.tabs button.active { font-weight: 600; }
+.refresh { margin-left: auto; }
+p { margin: 10px 0; }
+.muted { color: var(--cleanup-muted); }
+.intro { font-size: 12px; margin: 12px 0; line-height: 1.7; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.card { border: 1px solid var(--cleanup-border); border-radius: 8px; background: var(--cleanup-surface); padding: 14px 16px; }
+.stats .card { padding: 12px 14px; }
+.stats span { font-size: 12px; color: var(--cleanup-muted); }
+.stats strong { display: block; font-size: 21px; font-weight: 600; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.stats small { font-size: 12px; font-weight: 400; }
+.filters { margin-bottom: 12px; }
+.filters > input { max-width: 360px; min-width: 180px; flex: 1; }
+.select-field { display: inline-flex; position: relative; }
+.select-field select { appearance: none; width: 100%; min-width: 140px; padding-right: 32px; }
+.select-field::after { content: ""; position: absolute; right: 13px; top: 12px; width: 6px; height: 6px; border-right: 1.5px solid var(--cleanup-muted); border-bottom: 1.5px solid var(--cleanup-muted); transform: rotate(45deg); pointer-events: none; }
+.scroll { overflow: auto; }
+.listing { padding: 0; }
+table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+th, td { padding: 11px 14px; border-bottom: 1px solid var(--cleanup-border); vertical-align: top; }
+th { color: var(--cleanup-muted); background: var(--cleanup-raised); font-weight: 500; white-space: nowrap; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: color-mix(in srgb, var(--cleanup-accent) 3%, var(--cleanup-surface)); }
+.workspace { min-width: 240px; }
+.workspace > strong { font-weight: 600; }
+.path { overflow-wrap: anywhere; word-break: break-word; max-width: 460px; }
+.workspace .path { color: var(--cleanup-muted); font-size: 11.5px; margin: 4px 0; }
+.workspace details { margin: 6px 0; }
+summary { cursor: pointer; color: var(--cleanup-accent); }
+.badge { display: inline-block; padding: 1px 7px; border-radius: 999px; font-size: 11px; color: var(--cleanup-muted); background: var(--cleanup-raised); }
+.badge.available { color: var(--ui-success, #16815b); background: color-mix(in srgb, var(--ui-success, #16815b) 10%, var(--cleanup-surface)); }
+.reason { max-width: 280px; min-width: 150px; line-height: 1.6; margin: 6px 0 0; }
+.nowrap { white-space: nowrap; }
+.listing + p, .scroll > .muted { font-size: 11.5px; }
+.empty { padding: 44px 16px; text-align: center; color: var(--cleanup-muted); }
+.policy { max-width: 760px; }
+.stack { display: grid; gap: 16px; }
+h3 { margin: 0; font-size: 14px; font-weight: 600; }
+.policy p { margin: 0; line-height: 1.7; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid label { display: grid; gap: 6px; }
+.grid input { width: 100%; min-width: 0; }
+.checkbox-field { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 12px; border: 1px solid var(--cleanup-border); border-radius: 6px; background: var(--cleanup-raised); }
+footer { display: flex; justify-content: flex-end; gap: 8px; }
+.error { color: var(--ui-danger, #dc5463); border: 1px solid currentColor; padding: 10px 12px; border-radius: 6px; overflow-wrap: anywhere; }
+dialog { width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 32px); padding: 20px; border: 1px solid var(--cleanup-border); border-radius: 10px; color: inherit; background: var(--cleanup-surface); box-shadow: 0 16px 56px #0003; }
+dialog::backdrop { background: transparent; }
+dialog h2 { margin: 0 0 16px; font-size: 16px; font-weight: 600; }
+dialog p { line-height: 1.8; }
+dialog ul { padding-left: 20px; }
+dialog li { padding: 4px 0; }
+dialog footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--cleanup-border); }
+@media (max-width: 700px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stats strong { font-size: 19px; }
+  .filters > input { max-width: none; width: 100%; flex-basis: 100%; }
+  .filters .select-field { flex: 1; }
+  .filters button { flex: 1; }
+  .grid { grid-template-columns: 1fr; }
+  .card { padding: 12px; }
+  .listing { padding: 0; }
+}
+@media (prefers-reduced-motion: reduce) { button { transition: none; } }
