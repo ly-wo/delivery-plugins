@@ -1,0 +1,89 @@
+{
+  "apiVersion": 1,
+  "hostApi": 2,
+  "id": "worktree-cleanup",
+  "name": "会话空间清理",
+  "version": "1.0.2",
+  "description": "盘点会话关联 worktree 的磁盘占用，预览并清理闲置副本，支持默认关闭的周期清理。保留 Git 分支及会话记录。",
+  "category": "tool",
+  "tags": [
+    "worktree",
+    "会话",
+    "空间清理"
+  ],
+  "author": "Delivery 插件维护者",
+  "compatibility": {
+    "protocol": 1,
+    "sdk": "2.2.0"
+  },
+  "theme": "full",
+  "releaseNotes": "统一工作台主题与紧凑布局，明确会话 worktree 的磁盘占用口径及外部目录范围；保留清理策略、数据与授权。",
+  "permissions": [
+    "storage.read",
+    "application.local",
+    "workspaces.read",
+    "workspaces.cleanup",
+    "background.run"
+  ],
+  "page": {
+    "title": "会话空间清理",
+    "kind": "application"
+  },
+  "application": {
+    "frontend": "ui.js",
+    "styles": "ui.css",
+    "backend": "server.mjs"
+  },
+  "background": {
+    "method": "tick",
+    "intervalSeconds": 60
+  },
+  "records": {
+    "storage": "private",
+    "resourceType": "entry",
+    "fields": [
+      {
+        "key": "title",
+        "label": "标题",
+        "type": "text",
+        "required": true
+      }
+    ]
+  },
+  "commands": [],
+  "dependencies": [
+    "SDK 2.2.0 宿主会话工作区接口；工作台运行期间执行周期任务"
+  ],
+  "capabilities": [
+    {
+      "id": "storage.read",
+      "required": true,
+      "purpose": "使用插件自己的策略及清理记录",
+      "scope": "当前插件隔离数据目录"
+    },
+    {
+      "id": "application.local",
+      "required": true,
+      "purpose": "运行清理页面和策略后端",
+      "scope": "受信任本机代码，以当前用户权限运行；不是操作系统沙箱"
+    },
+    {
+      "id": "workspaces.read",
+      "required": true,
+      "purpose": "读取会话 worktree、会话名称、占用及可清理状态",
+      "scope": "当前宿主中有会话关联的 Git worktree，不读取会话正文"
+    },
+    {
+      "id": "workspaces.cleanup",
+      "required": false,
+      "purpose": "确认后安全回收可清理的会话 worktree",
+      "scope": "经过宿主检查且未占用、无未提交及忽略文件的副本；保留分支和会话"
+    },
+    {
+      "id": "background.run",
+      "required": false,
+      "purpose": "关闭插件页面后按已确认策略执行周期清理",
+      "scope": "仅插件启用且授权有效时；安装不自动启用清理策略"
+    }
+  ]
+}

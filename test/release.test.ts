@@ -12,7 +12,8 @@ test('all release manifests derive catalog metadata and are self-contained',asyn
  for(const release of catalog.releases){
   const bytes=await fs.readFile(path.join('dist',release.package));assert.equal(createHash('sha256').update(bytes).digest('hex'),release.sha256);
   const envelope=JSON.parse(bytes.toString()), manifest=pluginManifestSchema.parse(JSON.parse(Buffer.from(envelope.files['plugin.json'],'base64').toString()));assert.deepEqual(manifest,release.manifest);
-  assert.ok(['capability','tool','application'].includes(manifest.category!));assert.equal(manifest.compatibility?.sdk,'2.1.0');
+  assert.ok(['capability','tool','application'].includes(manifest.category!));assert.ok(['2.1.0','2.2.0'].includes(manifest.compatibility?.sdk || ''));
+  if(manifest.background) assert.equal(manifest.compatibility?.sdk,'2.2.0');
   if(manifest.application){const server=Buffer.from(envelope.files['server.mjs'],'base64').toString();assert.ok(!server.includes('/Users/lywo/'));const root=await fs.mkdtemp(path.join(os.tmpdir(),'detached-release-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.writeFile(path.join(root,'server.mjs'),server);const module=await import(pathToFileURL(path.join(root,'server.mjs')).href);assert.equal(typeof module.createPlugin,'function');}
  }
 });

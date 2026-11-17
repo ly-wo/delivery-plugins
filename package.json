@@ -10,7 +10,7 @@
     "check": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@delivery/plugin-sdk": "file:vendor/delivery-plugin-sdk-2.1.0.tgz",
+    "@delivery/plugin-sdk": "file:vendor/delivery-plugin-sdk-2.2.0.tgz",
     "vue": "3.5.42",
     "zod": "4.5.4",
     "element-plus": "2.14.5",
