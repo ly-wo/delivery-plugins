@@ -1,3 +1,4 @@
+import {pluginManifestSchema as browserManifestSchema} from '@delivery/plugin-sdk-browser/manifest';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -11,8 +12,8 @@ test('all release manifests derive catalog metadata and are self-contained',asyn
  assert.ok(!catalog.releases.some((release:any)=>['jira','confluence'].includes(release.id)), 'fixed integrations must not be published as duplicate custom plugins');
  for(const release of catalog.releases){
   const bytes=await fs.readFile(path.join('dist',release.package));assert.equal(createHash('sha256').update(bytes).digest('hex'),release.sha256);
-  const envelope=JSON.parse(bytes.toString()), manifest=pluginManifestSchema.parse(JSON.parse(Buffer.from(envelope.files['plugin.json'],'base64').toString()));assert.deepEqual(manifest,release.manifest);
-  assert.ok(['capability','tool','application'].includes(manifest.category!));assert.ok(['2.1.0','2.2.0'].includes(manifest.compatibility?.sdk || ''));
+  const envelope=JSON.parse(bytes.toString()), raw=JSON.parse(Buffer.from(envelope.files['plugin.json'],'base64').toString()), manifest=(raw.compatibility?.sdk === '2.2.1' ? browserManifestSchema : pluginManifestSchema).parse(raw);assert.deepEqual(manifest,release.manifest);
+  assert.ok(['capability','tool','application'].includes(manifest.category!));assert.ok(['2.1.0','2.2.0','2.2.1'].includes(manifest.compatibility?.sdk || ''));
   if(manifest.background) assert.equal(manifest.compatibility?.sdk,'2.2.0');
   if(manifest.application){const server=Buffer.from(envelope.files['server.mjs'],'base64').toString();assert.ok(!server.includes('/Users/lywo/'));const root=await fs.mkdtemp(path.join(os.tmpdir(),'detached-release-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));await fs.writeFile(path.join(root,'server.mjs'),server);const module=await import(pathToFileURL(path.join(root,'server.mjs')).href);assert.equal(typeof module.createPlugin,'function');}
  }

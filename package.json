@@ -14,7 +14,8 @@
     "vue": "3.5.42",
     "zod": "4.5.4",
     "element-plus": "2.14.5",
-    "@lucide/vue": "1.41.0"
+    "@lucide/vue": "1.41.0",
+    "ws": "8.21.3"
   },
   "devDependencies": {
     "vite": "8.2.2",
@@ -22,6 +23,8 @@
     "typescript": "5.9.3",
     "tsx": "4.23.13",
     "@types/node": "26.4.1",
-    "vue-tsc": "3.3.11"
+    "vue-tsc": "3.3.11",
+    "@types/ws": "8.18.1",
+    "@delivery/plugin-sdk-browser": "file:vendor/delivery-plugin-sdk-2.2.1.tgz"
   }
 }

@@ -1,3 +1,4 @@
+import {pluginManifestSchema as browserManifestSchema} from '@delivery/plugin-sdk-browser/manifest';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -9,7 +10,7 @@ const releases=[];
 for(const folder of (await fs.readdir('plugins')).sort()) {
   const root=path.resolve('plugins',folder);
   let raw; try {raw=JSON.parse(await fs.readFile(path.join(root,'plugin.json'),'utf8'));} catch(error){if(error.code==='ENOENT')continue;throw error;}
-  const manifest=pluginManifestSchema.parse(raw);
+  const manifest=(raw.compatibility?.sdk === '2.2.1' ? browserManifestSchema : pluginManifestSchema).parse(raw);
   if(manifest.application) {
     const result=spawnSync(process.execPath,['build.mjs'],{cwd:root,stdio:'inherit'});
     if(result.status!==0) throw new Error(`${folder} 构建失败`);
