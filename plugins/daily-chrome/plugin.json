@@ -1,0 +1,80 @@
+{
+  "apiVersion": 1,
+  "hostApi": 2,
+  "id": "daily-chrome",
+  "name": "日常 Chrome",
+  "version": "1.0.1",
+  "description": "连接日常 Chrome，核对授权状态并为 AI 任务提供独立浏览器会话。浏览器能力可选，不影响普通代码任务。",
+  "category": "tool",
+  "tags": [
+    "浏览器",
+    "Chrome"
+  ],
+  "author": "Delivery 插件维护者",
+  "compatibility": {
+    "protocol": 1,
+    "sdk": "2.2.1"
+  },
+  "theme": "full",
+  "releaseNotes": "缺少 agent-browser 时提供官方安装链接，通过系统浏览器打开安装说明。",
+  "permissions": [
+    "storage.read",
+    "application.local",
+    "browser.provide"
+  ],
+  "capabilities": [
+    {
+      "id": "storage.read",
+      "required": true,
+      "purpose": "读取本插件连接偏好",
+      "scope": "插件自身隔离数据目录"
+    },
+    {
+      "id": "application.local",
+      "required": true,
+      "purpose": "在本机检测 Chrome 调试入口，按用户操作建立连接和隔离转发通道",
+      "scope": "当前用户的本机 Chrome；需单独在 Chrome 中允许连接。本机代码不是操作系统沙箱。"
+    },
+    {
+      "id": "browser.provide",
+      "required": false,
+      "purpose": "为 AI 任务提供用户已授权的浏览器连接",
+      "scope": "当前插件管理的 Chrome 通道；拒绝此权限仍可检测和管理连接"
+    }
+  ],
+  "page": {
+    "title": "日常 Chrome",
+    "kind": "application"
+  },
+  "application": {
+    "frontend": "ui.js",
+    "styles": "ui.css",
+    "backend": "server.mjs"
+  },
+  "provides": [
+    {
+      "name": "browser.connection",
+      "version": 1,
+      "methods": [
+        "browser/status",
+        "browser/session"
+      ]
+    }
+  ],
+  "records": {
+    "storage": "private",
+    "resourceType": "entry",
+    "fields": [
+      {
+        "key": "title",
+        "label": "标题",
+        "type": "text",
+        "required": true
+      }
+    ]
+  },
+  "commands": [],
+  "dependencies": [
+    "macOS 与日常 Google Chrome；网页自动操作需要 agent-browser；宿主须支持 SDK 2.2.1 浏览器提供者协议"
+  ]
+}

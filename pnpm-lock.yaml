@@ -121,13 +121,22 @@ importers:
       vue:
         specifier: 3.5.42
         version: 3.5.42(typescript@5.9.3)
+      ws:
+        specifier: 8.21.3
+        version: 8.21.3
       zod:
         specifier: 4.5.4
         version: 4.5.4
     devDependencies:
+      '@delivery/plugin-sdk-browser':
+        specifier: file:vendor/delivery-plugin-sdk-2.2.1.tgz
+        version: '@delivery/plugin-sdk@file:vendor/delivery-plugin-sdk-2.2.1.tgz'
       '@types/node':
         specifier: 26.4.1
         version: 26.4.1
+      '@types/ws':
+        specifier: 8.18.1
+        version: 8.18.1
       '@vitejs/plugin-vue':
         specifier: 6.0.8
         version: 6.0.8(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(tsx@4.23.13))(vue@3.5.42(typescript@5.9.3))
@@ -170,6 +179,10 @@ packages:
   '@delivery/plugin-sdk@file:vendor/delivery-plugin-sdk-2.2.0.tgz':
     resolution: {integrity: sha512-2GXWRuC95aaMt4F6HKKzl4sF5xrh9uJZeXguGa0lm6pvlHGCFVnhZkurSI4LKQV9KW/Ur2YeLtIvy5AaTDsQnw==, tarball: file:vendor/delivery-plugin-sdk-2.2.0.tgz}
     version: 2.2.0
+
+  '@delivery/plugin-sdk@file:vendor/delivery-plugin-sdk-2.2.1.tgz':
+    resolution: {integrity: sha512-5YfDUDWb0f++y4YLEuEI/q9ogaC4zAAezKbufPSZRSd+JlS0XOa7B4y5Jr02O1nCKZ/D6MBzsN0cdARcy34gdw==, tarball: file:vendor/delivery-plugin-sdk-2.2.1.tgz}
+    version: 2.2.1
 
   '@element-plus/icons-vue@2.3.2':
     resolution: {integrity: sha512-OzIuTaIfC8QXEPmJvB4Y4kw34rSXdCJzxcD1kFStBvr8bK6X1zQAYDo0CNMjojnfTqRQCJ0I7prlErcoRiET2A==}
@@ -489,6 +502,9 @@ packages:
 
   '@types/web-bluetooth@0.0.21':
     resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==}
+
+  '@types/ws@8.18.1':
+    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
   '@vitejs/plugin-vue@6.0.8':
     resolution: {integrity: sha512-0ZjgOg7oO6farnNGup7yvoM/YXZV84OZxHAwtflItNa/6zzQyVb5LNxyea3FEKEX2XlagIKzrlH7wwxkKgtiew==}
@@ -811,6 +827,18 @@ packages:
       typescript:
         optional: true
 
+  ws@8.21.3:
+    resolution: {integrity: sha512-201TZ/kPWxoPr/OKWjquZR1SWKXcvxdH+e1xrx89b3YbmzLMFCLfnaG1HFIgWzJOEWZ7MvpK++odZufgYR50Rw==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   zod@4.5.4:
     resolution: {integrity: sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA==}
 
@@ -832,6 +860,10 @@ snapshots:
   '@ctrl/tinycolor@4.3.1': {}
 
   '@delivery/plugin-sdk@file:vendor/delivery-plugin-sdk-2.2.0.tgz':
+    dependencies:
+      zod: 4.5.4
+
+  '@delivery/plugin-sdk@file:vendor/delivery-plugin-sdk-2.2.1.tgz':
     dependencies:
       zod: 4.5.4
 
@@ -1031,6 +1063,10 @@ snapshots:
       undici-types: 8.3.0
 
   '@types/web-bluetooth@0.0.21': {}
+
+  '@types/ws@8.18.1':
+    dependencies:
+      '@types/node': 26.4.1
 
   '@vitejs/plugin-vue@6.0.8(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(tsx@4.23.13))(vue@3.5.42(typescript@5.9.3))':
     dependencies:
@@ -1355,5 +1391,7 @@ snapshots:
       '@vue/shared': 3.5.42
     optionalDependencies:
       typescript: 5.9.3
+
+  ws@8.21.3: {}
 
   zod@4.5.4: {}
